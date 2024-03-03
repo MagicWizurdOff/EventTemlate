@@ -1,5 +1,6 @@
 package dev.eventtemplate.teams;
 
+import dev.eventtemplate.*;
 import net.luckperms.api.*;
 import net.luckperms.api.model.group.*;
 import net.luckperms.api.model.user.*;
@@ -25,9 +26,24 @@ public class LuckPermsApi {
         lp = provider.getProvider();
         teams = new HashMap<>();
         teamNodes = new HashSet<>();
+        createGroups();
         for (Groups g : Groups.values()) {
             teams.put(g, lp.getGroupManager().getGroup(g.getName()));
             teamNodes.add(InheritanceNode.builder(g.getPermissionName()).build());
+        }
+
+    }
+    private void createGroups() {
+        for (Groups g : Groups.values()) {
+            GroupManager manager = lp.getGroupManager();
+            String group_name = g.getName();
+            int weight = g.getWeight();
+            if (manager.getGroup(group_name) != null)
+                return;
+            Group group = lp.getGroupManager().createAndLoadGroup(group_name).join();
+            group.data().add(PrefixNode.builder().prefix(g.getPrefix() + " &7").priority(weight).build());
+            group.data().add(WeightNode.builder().weight(weight).build());
+            Main.log("&aCreated group &7" + g.getName());
         }
     }
     public List<Groups> getGroups(Player p) {

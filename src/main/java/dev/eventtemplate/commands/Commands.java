@@ -17,14 +17,12 @@ public class Commands implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!sender.isOp() && !sender.hasPermission("war.admin")) {
+        if (!sender.isOp() && !sender.hasPermission("war.admin"))
             return true;
-        }
-        if (args.length == 0) {
-            sender.sendMessage(ChatColor.RED + "No arguments found. Use /help for help!");
-        }
+        if (args.length == 0)
+            return unknown(sender);
 //        if (!(sender instanceof Player)) {
-//            sender.sendMessage(ChatColor.RED + "Only players can execute this command!");
+//            (ChatColor.RED + "Only players can execute this command!");
 //            return true;
 //        }
         return switch (args[0].toLowerCase()) {
@@ -40,7 +38,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     }
 
     private boolean notPlayerError(CommandSender sender) {
-        sender.sendMessage(ChatColor.RED + "This command can be only run by a player!");
+        Main.message(sender,ChatColor.RED + "This command can be only run by a player!");
         return true;
     }
 
@@ -57,7 +55,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 
     private boolean eventCommand(CommandSender sender, String[] args) {
         Events.valueOf(args[1].toUpperCase()).getEvent().start();
-        sender.sendMessage(ChatColor.GREEN + "Event " + args[1] + " has started!");
+        Main.message(sender, ChatColor.GREEN + "Event " + args[1] + " has started!");
         return true;
     }
     private boolean titleCommand(String[] args) {
@@ -65,7 +63,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         return true;
     }
     private boolean unknown(CommandSender sender) {
-        sender.sendMessage(ChatColor.RED + "Unknown argument. Use /help to show valid arguments!");
+        Main.message(sender, ChatColor.RED + "Unknown argument. Use /help to show valid arguments!");
         return true;
     }
 
@@ -86,7 +84,7 @@ public class Commands implements CommandExecutor, TabCompleter {
             Scanner myReader = new Scanner(helpTxt);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', data));
+                Main.message(sender, ChatColor.translateAlternateColorCodes('&', data));
             }
             myReader.close();
         } catch (FileNotFoundException e) {
@@ -98,7 +96,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     private boolean reloadCommand(CommandSender sender) {
         for (String s : Main.getConfigMap().keySet())
             Main.getConfigMap().get(s).reload();
-        sender.sendMessage(ChatColor.GREEN + "Reload complete!");
+        Main.message(sender, ChatColor.GREEN + "Reload complete!");
         return true;
     }
 

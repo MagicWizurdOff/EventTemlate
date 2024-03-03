@@ -15,7 +15,7 @@ public class TeamsCommands {
         Player p = Bukkit.getPlayer(args[2]);
         Groups g = Groups.valueOf(args[3].toUpperCase());
         if (p == null) {
-            sender.sendMessage(ChatColor.RED + "Player is not online!");
+            Main.message(sender, ChatColor.RED + "Player is not online!");
             return true;
         }
         return Main.getLpApi().joinGroup(p, g);
@@ -23,7 +23,7 @@ public class TeamsCommands {
     public static boolean leaveGroup(CommandSender sender, String[] args) {
         Player p = Bukkit.getPlayer(args[2]);
         if (p == null) {
-            sender.sendMessage(ChatColor.RED + "Player is not online!");
+            Main.message(sender, ChatColor.RED + "Player is not online!");
             return true;
         }
         return Main.getLpApi().leaveGroup(p);
@@ -33,12 +33,12 @@ public class TeamsCommands {
         for (Groups g : Groups.values()) {
             int count = map.get(g).size();
             StringBuilder builder = new StringBuilder();
-            sender.sendMessage(ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "Teams:");
-            sender.sendMessage(ChatColor.GOLD + g.getDisplayName() + " (" + count +"):");
+            Main.message(sender, ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "Teams:");
+            Main.message(sender, ChatColor.GOLD + g.getDisplayName() + " (" + count +"):");
             for (Player p : map.get(g)) {
                 builder.append(p.getName()).append(", ");
             }
-            sender.sendMessage(ChatColor.GRAY + builder.toString());
+            Main.message(sender, ChatColor.GRAY + builder.toString());
         }
         return true;
     }

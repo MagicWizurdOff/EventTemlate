@@ -6,6 +6,8 @@ import dev.eventtemplate.events.*;
 import dev.eventtemplate.items.*;
 import dev.eventtemplate.teams.*;
 import org.bukkit.*;
+import org.bukkit.command.*;
+import org.bukkit.entity.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.*;
 
@@ -21,7 +23,6 @@ public final class Main extends JavaPlugin {
     private static Map<Integer, Event> events;
     private static Config spawnConfig;
     private static Config teamConfig;
-    public static Event event1;
     private static final String PREFIX = ChatColor.translateAlternateColorCodes('&', "&6[&3EventTemplate&6]&r");
 
     @Override
@@ -57,6 +58,12 @@ public final class Main extends JavaPlugin {
 
     public static void log(String msg) {
         Bukkit.getConsoleSender().sendMessage(PREFIX + " " + ChatColor.translateAlternateColorCodes('&', msg));
+    }
+    public static void message(Player p, String msg) {
+        p.sendMessage(PREFIX + " " + ChatColor.translateAlternateColorCodes('&', msg));
+    }
+    public static void message(CommandSender p, String msg) {
+        p.sendMessage(PREFIX + " " + ChatColor.translateAlternateColorCodes('&', msg));
     }
     public static long getPeriod() {
         return period;

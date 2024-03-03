@@ -43,6 +43,7 @@ public class LuckPermsApi {
             Group group = lp.getGroupManager().createAndLoadGroup(group_name).join();
             group.data().add(PrefixNode.builder().prefix(g.getPrefix() + " &7").priority(weight).build());
             group.data().add(WeightNode.builder().weight(weight).build());
+            manager.saveGroup(group);
             Main.log("&aCreated group &7" + g.getName());
         }
     }

@@ -21,10 +21,6 @@ public class Commands implements CommandExecutor, TabCompleter {
             return true;
         if (args.length == 0)
             return unknown(sender);
-//        if (!(sender instanceof Player)) {
-//            (ChatColor.RED + "Only players can execute this command!");
-//            return true;
-//        }
         return switch (args[0].toLowerCase()) {
             case "help" -> helpCommand(sender);
             case "teams" -> teamsCommand(sender, args);
@@ -46,6 +42,11 @@ public class Commands implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player))
             return notPlayerError(sender);
         Player p = ((Player) sender).getPlayer();
+        if (args[1].equalsIgnoreCase("lost")) {
+            Main.getSpawnConfig().getConfig().set("lost", p.getLocation());
+            Main.getSpawnConfig().saveConfig();
+            return true;
+        }
         Events e = Events.valueOf(args[1].toUpperCase());
         Groups g = Groups.valueOf(args[2].toUpperCase());
         Main.getSpawnConfig().getConfig().set(e.getName() + "." + g.getName(), p.getLocation());
@@ -106,7 +107,8 @@ public class Commands implements CommandExecutor, TabCompleter {
     private final String[] teams1 = new String[] {
             "join", "leave", "list", "random"
     };
-    private final String[] events = Arrays.stream(Events.values()).map(Events::getId).map(String::valueOf).toArray(String[]::new);
+    private final String[] events1 = Arrays.stream(Events.values()).map(Events::getName).toArray(String[]::new);
+    private final String[] events = Arrays.copyOf(events1, events1.length + 1);
     private final String[] groups = Arrays.stream(Groups.values()).map(Groups::getName).toArray(String[]::new);
 
     @Nullable
@@ -117,17 +119,17 @@ public class Commands implements CommandExecutor, TabCompleter {
                     .filter(subcommand -> subcommand.startsWith(args[0]))
                     .toList();
         if (args.length == 2) {
+            events[events.length - 1] = "lost";
             if (args[0].equalsIgnoreCase("teams"))
                 return Arrays.stream(teams1)
                         .filter(subcommand -> subcommand.startsWith(args[1]))
                         .toList();
             if (args[0].equalsIgnoreCase("event"))
-                return Arrays.stream(events)
+                return Arrays.stream(events1)
                         .filter(subcommand -> subcommand.startsWith(args[1]))
                         .toList();
             if (args[0].equalsIgnoreCase("spawn"))
-                return Arrays.stream(Events.values())
-                        .map(Events::getName)
+                return Arrays.stream(events)
                         .filter(subcommand -> subcommand.startsWith(args[1]))
                         .toList();
         }

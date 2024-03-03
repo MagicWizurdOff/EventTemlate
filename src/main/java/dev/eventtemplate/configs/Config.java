@@ -2,6 +2,7 @@ package dev.eventtemplate.configs;
 
 import com.google.common.base.*;
 import dev.eventtemplate.*;
+import dev.eventtemplate.teams.*;
 import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 
@@ -11,14 +12,25 @@ public class Config {
     private File customConfigFile;
     private FileConfiguration customConfig;
     private final String name;
+    private final boolean setup;
     public Config(String name) {
         this.name = name;
+        this.setup = false;
         create();
         register();
     }
+    public Config(String name, boolean setup) {
+        this.name = name;
+        this.setup = setup;
+        create();
+        register();
+    }
+
+
     public FileConfiguration getConfig() {
         return customConfig;
     }
+
     public void create() {
         customConfigFile = new File(Main.getInstance().getDataFolder(), name + ".yml");
         if (!customConfigFile.exists()) {
@@ -30,7 +42,16 @@ public class Config {
         try {
             customConfig.load(customConfigFile);
         } catch (IOException | InvalidConfigurationException e) {
-            Main.getInstance().getLogger().warning(e.getLocalizedMessage());
+            Main.log(e.getLocalizedMessage());
+        }
+        if (setup) {
+            for (Groups g : Groups.values())
+                if (!customConfig.isSet(g.getName())) {
+                    customConfig.set(g.getName(), new String[]{
+                            "default"
+                    });
+                    saveConfig();
+                }
         }
     }
     public void saveConfig() {

@@ -1,0 +1,4 @@
+settings:
+  hardcore: true
+  items_drop: false
+  teams_on_join: true

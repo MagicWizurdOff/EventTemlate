@@ -1,13 +1,15 @@
 dev\eventtemplate\items\ItemBuilder.class
-dev\eventtemplate\events\Event0$1.class
+dev\eventtemplate\listeners\JoinListener.class
 dev\eventtemplate\items\Kit.class
+dev\eventtemplate\listeners\RespawnListener.class
 dev\eventtemplate\commands\TeamsCommands.class
 dev\eventtemplate\MapBuilder.class
-dev\eventtemplate\events\Event0.class
 dev\eventtemplate\commands\Commands.class
+dev\eventtemplate\events\events\Event0.class
 dev\eventtemplate\items\Kits.class
 dev\eventtemplate\configs\Config.class
 dev\eventtemplate\events\Event$1.class
+dev\eventtemplate\events\events\Event0$1.class
 dev\eventtemplate\teams\LuckPermsApi.class
 dev\eventtemplate\teams\Groups.class
 dev\eventtemplate\Main.class

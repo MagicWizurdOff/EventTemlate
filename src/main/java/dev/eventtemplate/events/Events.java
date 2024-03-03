@@ -1,6 +1,7 @@
 package dev.eventtemplate.events;
 
 import dev.eventtemplate.*;
+import dev.eventtemplate.events.events.*;
 import dev.eventtemplate.items.*;
 import dev.eventtemplate.teams.*;
 

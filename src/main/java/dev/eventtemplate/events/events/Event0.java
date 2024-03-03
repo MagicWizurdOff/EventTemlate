@@ -1,6 +1,7 @@
-package dev.eventtemplate.events;
+package dev.eventtemplate.events.events;
 
 import dev.eventtemplate.*;
+import dev.eventtemplate.events.*;
 import dev.eventtemplate.teams.*;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -8,7 +9,7 @@ import org.bukkit.scheduler.*;
 
 import java.util.*;
 
-public class Event0 extends Event{
+public class Event0 extends Event {
     @Override
     public void start() {
         if (!check())
